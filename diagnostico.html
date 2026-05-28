@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Gratuito — GVX Marketing e Negócios</title>
+<meta name="description" content="Preencha o diagnóstico. Em 48h entregamos uma análise real do seu negócio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0B2F3A;
+  --deep: #071A2C;
+  --teal: #18A0A6;
+  --white: #F5F7FA;
+  --teal-border: rgba(24,160,166,0.28);
+  --card-bg: rgba(7,26,44,0.55);
+  --input-bg: rgba(11,47,58,0.55);
+  --muted: rgba(245,247,250,0.42);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+  min-height: 100vh;
+}
+
+/* ── CURSOR ── */
+#cursor {
+  position: fixed; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--teal); pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); mix-blend-mode: screen;
+  left: -100px; top: -100px;
+  transition: width .2s, height .2s;
+}
+#cursor-ring {
+  position: fixed; width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(24,160,166,.45); pointer-events: none;
+  z-index: 9998; transform: translate(-50%,-50%);
+  left: -100px; top: -100px;
+  transition: width .22s, height .22s;
+}
+@media (pointer:coarse){ #cursor,#cursor-ring{display:none} body{cursor:auto} }
+
+/* ── GRAIN ── */
+.grain-layer {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+}
+
+/* ── BG X ── */
+.bg-x {
+  position: fixed; pointer-events: none; z-index: 0; opacity: .055;
+  right: -60px; top: 50%; transform: translateY(-50%);
+  width: min(580px, 52vw); height: min(580px, 52vw);
+}
+.bg-x svg { width: 100%; height: 100%; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(7,26,44,.92);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--teal-border);
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 40px; height: 76px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative;
+}
+.nav-inner::before {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--teal) 0%, transparent 100%);
+  opacity: .7;
+}
+.logo-link { text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.logo-gvx {
+  font-size: 1.7rem; font-weight: 800; letter-spacing: -.04em;
+  color: var(--white); line-height: 1;
+}
+.logo-gvx .logo-x { color: var(--teal); }
+.logo-sub {
+  font-size: .6rem; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: rgba(245,247,250,.4);
+  border-left: 1px solid var(--teal-border);
+  padding-left: 10px; line-height: 1.4;
+}
+.nav-back {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(245,247,250,.5); text-decoration: none;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--white); }
+.nav-back-arrow { transition: transform .2s; }
+.nav-back:hover .nav-back-arrow { transform: translateX(-3px); }
+@media(max-width:600px){ .nav-inner{padding:0 20px} .logo-sub{display:none} }
+
+/* ── PAGE WRAP ── */
+.page-wrap {
+  position: relative; z-index: 2;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center;
+  padding: 108px 24px 80px;
+}
+
+/* ── INTRO META ── */
+.wizard-meta {
+  text-align: center; max-width: 580px; margin-bottom: 36px;
+}
+.meta-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: .67rem; font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 14px;
+}
+.meta-eyebrow::before, .meta-eyebrow::after {
+  content:''; display:block; width:22px; height:1px; background:var(--teal);
+}
+.meta-title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
+  letter-spacing: -.025em; line-height: 1.12; margin-bottom: 12px;
+}
+.meta-title .accent { color: var(--teal); }
+.meta-desc { font-size: .88rem; color: var(--muted); line-height: 1.72; }
+
+/* ── WIZARD CARD ── */
+.wizard-card {
+  width: 100%; max-width: 860px;
+  background: rgba(7,26,44,.72);
+  border: 1px solid var(--teal-border);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-radius: 4px; position: relative; overflow: hidden;
+}
+.wizard-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal) 0%, rgba(24,160,166,.25) 100%);
+}
+
+/* ── STEP INDICATOR DOTS ── */
+.step-indicator {
+  display: flex; align-items: center;
+  padding: 28px 40px 0; gap: 0;
+}
+.si-dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid rgba(24,160,166,.2);
+  background: transparent;
+  color: rgba(245,247,250,.28);
+  font-size: .65rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all .35s ease;
+}
+.si-dot.done {
+  background: var(--teal); border-color: var(--teal);
+  color: var(--deep);
+}
+.si-dot.active {
+  border-color: var(--teal); color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(24,160,166,.15);
+}
+.si-line {
+  flex: 1; height: 1px;
+  background: rgba(24,160,166,.12);
+  transition: background .35s ease;
+}
+.si-line.done { background: var(--teal); }
+.si-step-label {
+  font-size: .65rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(245,247,250,.32); margin-left: 12px;
+  white-space: nowrap;
+}
+.si-step-label strong { color: var(--teal); }
+
+/* ── STEP PANELS ── */
+.wizard-body { padding: 32px 40px 24px; }
+.step-panel { display: none; }
+.step-panel.active {
+  display: block;
+  animation: stepIn .42s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes stepIn {
+  from { opacity:0; transform: translateY(18px); }
+  to   { opacity:1; transform: none; }
+}
+.step-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-size: .66rem; font-weight: 700;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 8px;
+}
+.step-eyebrow::before { content:''; width:20px; height:1px; background:var(--teal); }
+.step-title {
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.15; color: var(--white); margin-bottom: 24px;
+}
+.step-hint { font-size: .77rem; color: rgba(245,247,250,.36); margin-top:-16px; margin-bottom:20px; }
+
+/* ── FIELDS ── */
+.field-group { margin-bottom: 22px; }
+.field-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media(max-width:600px){
+  .field-row2,.field-row3 { grid-template-columns: 1fr; }
+}
+.field-label {
+  display: block; font-size: .7rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(245,247,250,.48); margin-bottom: 9px;
+}
+.field-label .optional {
+  font-weight: 500; text-transform: none; letter-spacing: 0;
+  font-size: .68rem; color: rgba(245,247,250,.25); margin-left: 5px;
+}
+.field-input, .field-textarea, .field-select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid rgba(24,160,166,.18);
+  color: var(--white);
+  font-family: 'Manrope', sans-serif;
+  font-size: .93rem; font-weight: 500;
+  padding: 13px 17px; border-radius: 2px; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  -webkit-appearance: none;
+}
+.field-input::placeholder, .field-textarea::placeholder { color: rgba(245,247,250,.2); }
+.field-input:focus, .field-textarea:focus, .field-select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(24,160,166,.1);
+}
+.field-textarea {
+  min-height: 100px; resize: vertical; line-height: 1.65;
+}
+.field-error {
+  font-size: .71rem; color: #f87171;
+  margin-top: 5px; display: none;
+}
+.field-error.show { display: block; }
+.field-input.invalid, .field-textarea.invalid {
+  border-color: rgba(248,113,113,.55);
+  box-shadow: 0 0 0 3px rgba(248,113,113,.07);
+}
+.char-count {
+  font-size: .68rem; color: rgba(245,247,250,.22);
+  text-align: right; margin-top: 5px;
+}
+
+/* ── OPTION CARDS ── */
+.option-cards { display: grid; gap: 9px; }
+.oc-2 { grid-template-columns: 1fr 1fr; }
+.oc-3 { grid-template-columns: 1fr 1fr 1fr; }
+.oc-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+@media(max-width:660px){ .oc-4{grid-template-columns:1fr 1fr} .oc-3{grid-template-columns:1fr 1fr} }
+@media(max-width:420px){ .oc-2,.oc-3,.oc-4{grid-template-columns:1fr} }
+
+.ocard {
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 3px;
+  padding: 15px 16px;
+  background: rgba(11,47,58,.42);
+  border: 1px solid rgba(24,160,166,.12);
+  border-radius: 2px; cursor: none;
+  position: relative; user-select: none;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+}
+.ocard:hover {
+  border-color: rgba(24,160,166,.36);
+  background: rgba(24,160,166,.05);
+}
+.ocard input { position: absolute; opacity: 0; pointer-events: none; width:0; height:0; }
+.ocard:has(input:checked) {
+  border-color: var(--teal);
+  background: rgba(24,160,166,.1);
+  box-shadow: inset 0 0 0 1px rgba(24,160,166,.28);
+}
+.ocard-main { font-size: .86rem; font-weight: 700; color: var(--white); line-height: 1.3; pointer-events: none; }
+.ocard-desc { font-size: .72rem; color: rgba(245,247,250,.38); line-height: 1.45; margin-top: 4px; pointer-events: none; }
+
+/* Radio dot */
+.ocard:has(input[type="radio"]:checked)::after {
+  content: ''; position: absolute; top: 11px; right: 11px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--teal);
+}
+
+/* Checkbox box */
+.ocard-check {
+  position: absolute; top: 11px; right: 11px;
+  width: 17px; height: 17px;
+  border: 1.5px solid rgba(24,160,166,.24);
+  border-radius: 2px; background: transparent;
+  transition: background .15s, border-color .15s; pointer-events: none;
+}
+.ocard:has(input[type="checkbox"]:checked) .ocard-check {
+  background: var(--teal); border-color: var(--teal);
+}
+.ocard:has(input[type="checkbox"]:checked) .ocard-check::after {
+  content: ''; position: absolute; left: 4px; top: 1px;
+  width: 5px; height: 9px;
+  border: 2px solid var(--deep);
+  border-left: none; border-top: none;
+  transform: rotate(45deg);
+}
+
+/* ── CONDITIONAL REVEAL ── */
+.conditional-reveal {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height .4s ease, opacity .3s ease, margin .3s ease;
+  margin-top: 0;
+}
+.conditional-reveal.open {
+  max-height: 600px; opacity: 1; margin-top: 16px;
+}
+
+/* ── SECTION DIVIDER ── */
+.field-divider {
+  border: none; border-top: 1px solid rgba(24,160,166,.1);
+  margin: 28px 0;
+}
+
+/* ── PRIVACY NOTE ── */
+.privacy-note {
+  font-size: .72rem; color: rgba(245,247,250,.27);
+  line-height: 1.65; margin-top: 6px;
+}
+
+/* ── WIZARD FOOTER ── */
+.wizard-footer {
+  padding: 18px 40px 30px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(24,160,166,.1);
+}
+.btn-back {
+  background: none; border: 1px solid rgba(24,160,166,.18);
+  color: rgba(245,247,250,.45);
+  font-family: 'Manrope', sans-serif;
+  font-size: .74rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 11px 20px; border-radius: 2px; cursor: none;
+  transition: border-color .2s, color .2s;
+  visibility: hidden;
+}
+.btn-back.visible { visibility: visible; }
+.btn-back:hover { border-color: var(--teal); color: var(--white); }
+.btn-next {
+  margin-left: auto;
+  background: var(--teal); border: none; color: var(--deep);
+  font-family: 'Manrope', sans-serif;
+  font-size: .78rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 14px 30px; border-radius: 2px; cursor: none;
+  position: relative; overflow: hidden;
+  transition: transform .15s, box-shadow .2s;
+}
+.btn-next::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,.13);
+  clip-path: polygon(0 0,0 0,0 100%,0 100%);
+  transition: clip-path .35s ease;
+}
+.btn-next:hover::before { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+.btn-next:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(24,160,166,.35); }
+.btn-next:active { transform: none; }
+
+/* ── THANK YOU ── */
+.thankyou-wrap {
+  position: relative; z-index: 2; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 24px 60px;
+}
+.thankyou-wrap.hidden { display: none; }
+.thankyou-card {
+  max-width: 580px; width: 100%; text-align: center;
+  animation: stepIn .6s cubic-bezier(.22,1,.36,1) forwards;
+}
+.ty-check {
+  width: 72px; height: 72px; border: 1.5px solid var(--teal);
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; margin: 0 auto 30px; position: relative;
+}
+.ty-check::before {
+  content: ''; position: absolute; inset: -8px;
+  border: 1px solid rgba(24,160,166,.2); border-radius: 50%;
+}
+.ty-check svg { width: 28px; height: 28px; }
+.ty-eyebrow {
+  font-size: .67rem; font-weight: 700; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 12px;
+}
+.ty-title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 800;
+  letter-spacing: -.025em; line-height: 1.1; margin-bottom: 14px;
+}
+.ty-title .ty-name { color: var(--teal); }
+.ty-sub {
+  font-size: .9rem; color: rgba(245,247,250,.5);
+  line-height: 1.75; max-width: 440px; margin: 0 auto 32px;
+}
+.ty-sub strong { color: rgba(245,247,250,.82); font-weight: 600; }
+.ty-promises {
+  display: flex; flex-direction: column; gap: 11px;
+  text-align: left;
+  background: rgba(7,26,44,.6);
+  border: 1px solid var(--teal-border);
+  border-radius: 3px; padding: 22px 26px; margin-bottom: 32px;
+}
+.ty-promise {
+  display: flex; align-items: flex-start; gap: 11px;
+  font-size: .83rem; color: rgba(245,247,250,.58); line-height: 1.5;
+}
+.ty-dot { flex-shrink:0; width:5px; height:5px; border-radius:50%; background:var(--teal); margin-top:7px; }
+.btn-ty {
+  display: inline-block; background: none;
+  border: 1px solid rgba(24,160,166,.28);
+  color: rgba(245,247,250,.55);
+  font-family: 'Manrope', sans-serif;
+  font-size: .76rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 12px 24px; border-radius: 2px; text-decoration: none;
+  transition: border-color .2s, color .2s;
+}
+.btn-ty:hover { border-color: var(--teal); color: var(--white); }
+
+.hidden { display: none !important; }
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .step-indicator { padding: 18px 20px 0; }
+  .si-step-label { display: none; }
+  .wizard-body { padding: 22px 20px 18px; }
+  .wizard-footer { padding: 14px 20px 22px; }
+  .step-title { font-size: 1.15rem; margin-bottom: 18px; }
+  .ocard { padding: 13px 13px; }
+  .page-wrap { padding: 96px 16px 60px; }
+  .field-group { margin-bottom: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div class="grain-layer" aria-hidden="true"></div>
+
+<div class="bg-x" aria-hidden="true">
+  <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(250,250)">
+      <circle r="230" fill="none" stroke="#F5F7FA" stroke-width="1" opacity=".22"/>
+      <circle r="177" fill="none" stroke="#18A0A6" stroke-width=".8" opacity=".28"/>
+      <circle r="117" fill="none" stroke="#F5F7FA" stroke-width=".7" opacity=".18"/>
+      <path d="M0,-230 L230,0 L0,230 L-230,0Z" fill="none" stroke="#F5F7FA" stroke-width=".8" opacity=".2"/>
+      <path d="M0,-156 L156,0 L0,156 L-156,0Z" fill="none" stroke="#18A0A6" stroke-width=".7" opacity=".28"/>
+      <line x1="-230" y1="-230" x2="230" y2="230" stroke="#F5F7FA" stroke-width="1.5" opacity=".22"/>
+      <line x1="230" y1="-230" x2="-230" y2="230" stroke="#F5F7FA" stroke-width="1.5" opacity=".22"/>
+      <line x1="0" y1="-242" x2="0" y2="-230" stroke="#18A0A6" stroke-width="1.8" opacity=".7"/>
+      <line x1="0" y1="230" x2="0" y2="242" stroke="#18A0A6" stroke-width="1.8" opacity=".7"/>
+      <line x1="-242" y1="0" x2="-230" y2="0" stroke="#18A0A6" stroke-width="1.8" opacity=".7"/>
+      <line x1="230" y1="0" x2="242" y2="0" stroke="#18A0A6" stroke-width="1.8" opacity=".7"/>
+      <circle r="5" fill="none" stroke="#18A0A6" stroke-width="2" opacity=".7"/>
+      <circle r="2" fill="#18A0A6" opacity=".9"/>
+    </g>
+  </svg>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo-link" aria-label="GVX Marketing e Negócios">
+      <span class="logo-gvx">GV<span class="logo-x">X</span></span>
+      <span class="logo-sub">Marketing<br>e Negócios</span>
+    </a>
+    <a href="index.html" class="nav-back">
+      <span class="nav-back-arrow">←</span> Voltar ao site
+    </a>
+  </div>
+</nav>
+
+<!-- ══════════════════ WIZARD ══════════════════ -->
+<div class="page-wrap" id="page-wizard">
+
+  <div class="wizard-meta">
+    <div class="meta-eyebrow">Diagnóstico Gratuito</div>
+    <h1 class="meta-title">Vamos analisar o seu<br><span class="accent">negócio de verdade</span></h1>
+    <p class="meta-desc">Preencha com honestidade. Quanto mais detalhe você der, mais precisa será a análise que você recebe em 48h.</p>
+  </div>
+
+  <div class="wizard-card">
+
+    <!-- Step indicator -->
+    <div class="step-indicator" id="step-indicator">
+      <div class="si-dot active" data-dot="1">1</div>
+      <div class="si-line" data-line="1"></div>
+      <div class="si-dot" data-dot="2">2</div>
+      <div class="si-line" data-line="2"></div>
+      <div class="si-dot" data-dot="3">3</div>
+      <div class="si-line" data-line="3"></div>
+      <div class="si-dot" data-dot="4">4</div>
+      <div class="si-line" data-line="4"></div>
+      <div class="si-dot" data-dot="5">5</div>
+      <div class="si-line" data-line="5"></div>
+      <div class="si-dot" data-dot="6">6</div>
+      <span class="si-step-label" id="step-label">Etapa <strong id="step-num">1</strong> de 6</span>
+    </div>
+
+    <form id="diag-form" method="POST" action="https://formspree.io/f/xojbyrpd">
+    <input type="hidden" name="_subject" id="f-subject" value="Diagnóstico GVX — Nova solicitação">
+    <div class="wizard-body">
+
+<!-- ══ ETAPA 1 — O negócio ══ -->
+<div class="step-panel active" data-step="1">
+  <p class="step-eyebrow">O negócio</p>
+  <h2 class="step-title">Nos conte sobre a sua empresa</h2>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label" for="f-empresa">Nome da empresa</label>
+      <input type="text" class="field-input" id="f-empresa" placeholder="Ex: Acme Ltda" autocomplete="organization">
+      <p class="field-error" id="err-empresa">Informe o nome da empresa</p>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-site">Site <span class="optional">(opcional)</span></label>
+      <input type="text" class="field-input" id="f-site" name="site" placeholder="www.suaempresa.com.br">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-segmento">Segmento / nicho de atuação</label>
+    <input type="text" class="field-input" id="f-segmento" name="segmento" placeholder="Ex: E-commerce de moda feminina, clínica de estética, SaaS jurídico…">
+    <p class="field-error" id="err-segmento">Descreva o segmento</p>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-produto">Qual é o seu principal produto ou serviço?</label>
+    <input type="text" class="field-input" id="f-produto" name="produto" placeholder="Ex: Assinaturas mensais de software, cursos online, clínica estética…">
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Modelo de negócio</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="modelo" value="b2b"><span class="ocard-main">B2B</span><span class="ocard-desc">Vende para empresas</span></label>
+        <label class="ocard"><input type="radio" name="modelo" value="b2c"><span class="ocard-main">B2C</span><span class="ocard-desc">Vende para pessoas</span></label>
+        <label class="ocard"><input type="radio" name="modelo" value="ambos"><span class="ocard-main">Ambos</span><span class="ocard-desc">B2B e B2C</span></label>
+        <label class="ocard"><input type="radio" name="modelo" value="marketplace"><span class="ocard-main">Marketplace</span><span class="ocard-desc">Plataforma/intermediário</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Tempo no mercado</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="tempo" value="menos1"><span class="ocard-main">Menos de 1 ano</span></label>
+        <label class="ocard"><input type="radio" name="tempo" value="1-3"><span class="ocard-main">1 – 3 anos</span></label>
+        <label class="ocard"><input type="radio" name="tempo" value="3-7"><span class="ocard-main">3 – 7 anos</span></label>
+        <label class="ocard"><input type="radio" name="tempo" value="mais7"><span class="ocard-main">+7 anos</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Abrangência geográfica</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="abrangencia" value="local"><span class="ocard-main">Local</span><span class="ocard-desc">Uma cidade/região</span></label>
+        <label class="ocard"><input type="radio" name="abrangencia" value="estadual"><span class="ocard-main">Estadual</span></label>
+        <label class="ocard"><input type="radio" name="abrangencia" value="nacional"><span class="ocard-main">Nacional</span></label>
+        <label class="ocard"><input type="radio" name="abrangencia" value="internacional"><span class="ocard-main">Internacional</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Tamanho da equipe</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="equipe" value="1-5"><span class="ocard-main">1 – 5 pessoas</span></label>
+        <label class="ocard"><input type="radio" name="equipe" value="6-20"><span class="ocard-main">6 – 20 pessoas</span></label>
+        <label class="ocard"><input type="radio" name="equipe" value="21-100"><span class="ocard-main">21 – 100 pessoas</span></label>
+        <label class="ocard"><input type="radio" name="equipe" value="+100"><span class="ocard-main">+100 pessoas</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ETAPA 2 — Números ══ -->
+<div class="step-panel" data-step="2">
+  <p class="step-eyebrow">Os números</p>
+  <h2 class="step-title">Os números que definem onde você está</h2>
+
+  <div class="field-group">
+    <label class="field-label">Faturamento mensal atual</label>
+    <div class="option-cards oc-4">
+      <label class="ocard"><input type="radio" name="faturamento" value="ate30k"><span class="ocard-main">Até R$30k</span></label>
+      <label class="ocard"><input type="radio" name="faturamento" value="30k-100k"><span class="ocard-main">R$30k – 100k</span></label>
+      <label class="ocard"><input type="radio" name="faturamento" value="100k-500k"><span class="ocard-main">R$100k – 500k</span></label>
+      <label class="ocard"><input type="radio" name="faturamento" value="+500k"><span class="ocard-main">+R$500k</span></label>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Ticket médio por venda / contrato</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="ticket" value="ate500"><span class="ocard-main">Até R$500</span></label>
+        <label class="ocard"><input type="radio" name="ticket" value="500-2k"><span class="ocard-main">R$500 – 2k</span></label>
+        <label class="ocard"><input type="radio" name="ticket" value="2k-10k"><span class="ocard-main">R$2k – 10k</span></label>
+        <label class="ocard"><input type="radio" name="ticket" value="+10k"><span class="ocard-main">+R$10k</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Clientes ativos hoje</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="clientes-ativos" value="ate20"><span class="ocard-main">Até 20</span></label>
+        <label class="ocard"><input type="radio" name="clientes-ativos" value="20-100"><span class="ocard-main">20 – 100</span></label>
+        <label class="ocard"><input type="radio" name="clientes-ativos" value="100-1k"><span class="ocard-main">100 – 1.000</span></label>
+        <label class="ocard"><input type="radio" name="clientes-ativos" value="+1k"><span class="ocard-main">+1.000</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Novos clientes conquistados por mês</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="novos-clientes" value="0-5"><span class="ocard-main">0 – 5</span></label>
+        <label class="ocard"><input type="radio" name="novos-clientes" value="5-20"><span class="ocard-main">5 – 20</span></label>
+        <label class="ocard"><input type="radio" name="novos-clientes" value="20-100"><span class="ocard-main">20 – 100</span></label>
+        <label class="ocard"><input type="radio" name="novos-clientes" value="+100"><span class="ocard-main">+100</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Taxa de retenção / recorrência</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="retencao" value="nao-sei"><span class="ocard-main">Não sei</span></label>
+        <label class="ocard"><input type="radio" name="retencao" value="baixa"><span class="ocard-main">Baixa</span><span class="ocard-desc">A maioria não volta</span></label>
+        <label class="ocard"><input type="radio" name="retencao" value="media"><span class="ocard-main">Média</span><span class="ocard-desc">Parte volta</span></label>
+        <label class="ocard"><input type="radio" name="retencao" value="alta"><span class="ocard-main">Alta</span><span class="ocard-desc">Maioria é recorrente</span></label>
+      </div>
+    </div>
+  </div>
+
+  <hr class="field-divider">
+
+  <div class="field-group">
+    <label class="field-label">Você sabe qual é o seu Custo de Aquisição de Cliente (CAC)?</label>
+    <div class="option-cards oc-3">
+      <label class="ocard" data-trigger="cac-reveal" data-val="sim">
+        <input type="radio" name="conhece-cac" value="sim">
+        <span class="ocard-main">Sim, sei</span>
+      </label>
+      <label class="ocard" data-trigger="cac-reveal" data-val="aproximado">
+        <input type="radio" name="conhece-cac" value="aproximado">
+        <span class="ocard-main">Tenho uma ideia</span>
+      </label>
+      <label class="ocard" data-trigger="cac-reveal" data-val="nao">
+        <input type="radio" name="conhece-cac" value="nao">
+        <span class="ocard-main">Não meço isso</span>
+      </label>
+    </div>
+    <div class="conditional-reveal" id="cac-reveal">
+      <label class="field-label">Quanto você gasta (em média) para adquirir um cliente?</label>
+      <div class="option-cards oc-4">
+        <label class="ocard"><input type="radio" name="cac-valor" value="ate50"><span class="ocard-main">Até R$50</span></label>
+        <label class="ocard"><input type="radio" name="cac-valor" value="50-300"><span class="ocard-main">R$50 – 300</span></label>
+        <label class="ocard"><input type="radio" name="cac-valor" value="300-2k"><span class="ocard-main">R$300 – 2k</span></label>
+        <label class="ocard"><input type="radio" name="cac-valor" value="+2k"><span class="ocard-main">+R$2k</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ETAPA 3 — Seus clientes ══ -->
+<div class="step-panel" data-step="3">
+  <p class="step-eyebrow">Seus clientes</p>
+  <h2 class="step-title">Quem compra de você — e como te encontra</h2>
+
+  <div class="field-group">
+    <label class="field-label" for="f-icp">Descreva o seu cliente ideal em 2 ou 3 frases</label>
+    <textarea class="field-textarea" id="f-icp" name="cliente-ideal" placeholder="Ex: Dono de clínica estética com 2 a 5 atendimentos por dia, que já tem redes sociais mas não converte. Procura crescer sem depender só de indicação. Tem CNPJ há mais de 2 anos e fatura entre R$30k e R$80k por mês." maxlength="500"></textarea>
+    <p class="char-count"><span id="icp-count">0</span>/500</p>
+    <p class="field-error" id="err-icp">Descreva o seu cliente ideal</p>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Como a maioria dos seus clientes chega até você hoje? <span class="optional">(pode marcar mais de um)</span></label>
+    <div class="option-cards oc-3">
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="indicacao"><span class="ocard-check"></span><span class="ocard-main">Indicação / boca a boca</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="organico-social"><span class="ocard-check"></span><span class="ocard-main">Redes sociais (orgânico)</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="trafego-pago"><span class="ocard-check"></span><span class="ocard-main">Tráfego pago (Meta / Google)</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="google-organico"><span class="ocard-check"></span><span class="ocard-main">Google / busca orgânica</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="prospeccao"><span class="ocard-check"></span><span class="ocard-main">Prospecção ativa</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="eventos"><span class="ocard-check"></span><span class="ocard-main">Eventos e feiras</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="parceiros"><span class="ocard-check"></span><span class="ocard-main">Parceiros / revendedores</span></label>
+      <label class="ocard"><input type="checkbox" name="aquisicao" value="sem-estrategia"><span class="ocard-check"></span><span class="ocard-main">Sem estratégia definida</span></label>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Qual é o maior obstáculo para conquistar mais clientes?</label>
+    <div class="option-cards oc-2">
+      <label class="ocard"><input type="radio" name="obstaculo" value="pouco-lead"><span class="ocard-main">Gero poucos leads</span><span class="ocard-desc">Não chego em volume suficiente</span></label>
+      <label class="ocard"><input type="radio" name="obstaculo" value="lead-ruim"><span class="ocard-main">Leads que chegam são ruins</span><span class="ocard-desc">Volume até tem, mas não qualificam</span></label>
+      <label class="ocard"><input type="radio" name="obstaculo" value="nao-converto"><span class="ocard-main">Não consigo converter</span><span class="ocard-desc">Leads chegam mas não compram</span></label>
+      <label class="ocard"><input type="radio" name="obstaculo" value="caro"><span class="ocard-main">Custo de aquisição alto</span><span class="ocard-desc">Preciso gastar muito para fechar</span></label>
+      <label class="ocard"><input type="radio" name="obstaculo" value="preco"><span class="ocard-main">Perco para preço</span><span class="ocard-desc">Concorrentes vendem mais barato</span></label>
+      <label class="ocard"><input type="radio" name="obstaculo" value="marca"><span class="ocard-main">Pouca autoridade de marca</span><span class="ocard-desc">Desconhecido no mercado</span></label>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-diferencial">Qual é o seu diferencial competitivo real? Por que um cliente deveria escolher você?</label>
+    <textarea class="field-textarea" id="f-diferencial" name="diferencial" placeholder="Seja honesto. Se não sabe responder isso claramente, nos diga — é uma informação importante para o diagnóstico." maxlength="400"></textarea>
+  </div>
+</div>
+
+<!-- ══ ETAPA 4 — Marketing atual ══ -->
+<div class="step-panel" data-step="4">
+  <p class="step-eyebrow">Marketing atual</p>
+  <h2 class="step-title">O que você já faz — e o que não está funcionando</h2>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Quem gerencia o marketing hoje?</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="gestor-mkt" value="eu"><span class="ocard-main">Eu mesmo</span><span class="ocard-desc">Sem equipe dedicada</span></label>
+        <label class="ocard"><input type="radio" name="gestor-mkt" value="funcionario"><span class="ocard-main">1 funcionário</span></label>
+        <label class="ocard"><input type="radio" name="gestor-mkt" value="equipe"><span class="ocard-main">Equipe interna</span></label>
+        <label class="ocard"><input type="radio" name="gestor-mkt" value="terceirizado"><span class="ocard-main">Terceirizado / Freelancer</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Budget mensal investido em marketing</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="budget" value="zero"><span class="ocard-main">Não invisto</span></label>
+        <label class="ocard"><input type="radio" name="budget" value="ate2k"><span class="ocard-main">Até R$2k</span></label>
+        <label class="ocard"><input type="radio" name="budget" value="2k-10k"><span class="ocard-main">R$2k – 10k</span></label>
+        <label class="ocard"><input type="radio" name="budget" value="+10k"><span class="ocard-main">+R$10k</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Canais de marketing que você já utiliza <span class="optional">(pode marcar mais de um)</span></label>
+    <div class="option-cards oc-3">
+      <label class="ocard"><input type="checkbox" name="canal" value="meta-ads"><span class="ocard-check"></span><span class="ocard-main">Meta Ads (Instagram/Facebook)</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="google-ads"><span class="ocard-check"></span><span class="ocard-main">Google Ads</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="seo"><span class="ocard-check"></span><span class="ocard-main">SEO / Blog</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="email"><span class="ocard-check"></span><span class="ocard-main">E-mail Marketing</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="whatsapp-mkt"><span class="ocard-check"></span><span class="ocard-main">WhatsApp Marketing</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="influencer"><span class="ocard-check"></span><span class="ocard-main">Influenciadores</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="youtube"><span class="ocard-check"></span><span class="ocard-main">YouTube / Vídeo</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="tiktok"><span class="ocard-check"></span><span class="ocard-main">TikTok</span></label>
+      <label class="ocard"><input type="checkbox" name="canal" value="nenhum"><span class="ocard-check"></span><span class="ocard-main">Nenhum ainda</span></label>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label">Ferramentas que usa <span class="optional">(pode marcar mais de um)</span></label>
+    <div class="option-cards oc-3">
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="google-analytics"><span class="ocard-check"></span><span class="ocard-main">Google Analytics</span></label>
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="rd-station"><span class="ocard-check"></span><span class="ocard-main">RD Station</span></label>
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="hubspot"><span class="ocard-check"></span><span class="ocard-main">HubSpot</span></label>
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="crm-proprio"><span class="ocard-check"></span><span class="ocard-main">CRM próprio</span></label>
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="active"><span class="ocard-check"></span><span class="ocard-main">ActiveCampaign</span></label>
+      <label class="ocard"><input type="checkbox" name="ferramenta" value="nenhuma"><span class="ocard-check"></span><span class="ocard-main">Nenhuma</span></label>
+    </div>
+  </div>
+
+  <hr class="field-divider">
+
+  <div class="field-group">
+    <label class="field-label" for="f-funciona">O que está funcionando bem no marketing hoje?</label>
+    <textarea class="field-textarea" id="f-funciona" name="o-que-funciona" placeholder="Quais ações, canais ou campanhas trouxeram resultado real? Se não sabe, escreva 'não tenho clareza nisso' — isso também é uma informação." maxlength="400"></textarea>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-nao-funciona">O que você já tentou e não funcionou?</label>
+    <textarea class="field-textarea" id="f-nao-funciona" name="o-que-nao-funciona" placeholder="Tráfego pago sem resultado? Agência que não entregou? Conteúdo que não gerou leads? Seja específico — isso evita que a gente repita o que já não adiantou." maxlength="400"></textarea>
+  </div>
+</div>
+
+<!-- ══ ETAPA 5 — Histórico e objetivos ══ -->
+<div class="step-panel" data-step="5">
+  <p class="step-eyebrow">Histórico e objetivos</p>
+  <h2 class="step-title">Onde você esteve — e para onde quer ir</h2>
+
+  <div class="field-group">
+    <label class="field-label">Já trabalhou com alguma agência de marketing?</label>
+    <div class="option-cards oc-3">
+      <label class="ocard" data-trigger="agencia-reveal" data-val="nao"><input type="radio" name="agencia" value="nao"><span class="ocard-main">Não</span></label>
+      <label class="ocard" data-trigger="agencia-reveal" data-val="sim"><input type="radio" name="agencia" value="sim"><span class="ocard-main">Sim</span><span class="ocard-desc">Tive boas experiências</span></label>
+      <label class="ocard" data-trigger="agencia-reveal" data-val="tentei"><input type="radio" name="agencia" value="tentei"><span class="ocard-main">Tentei</span><span class="ocard-desc">Não funcionou como esperado</span></label>
+    </div>
+    <div class="conditional-reveal" id="agencia-reveal">
+      <div class="field-group">
+        <label class="field-label">Como foi essa experiência?</label>
+        <div class="option-cards oc-3">
+          <label class="ocard"><input type="radio" name="agencia-exp" value="otima"><span class="ocard-main">Boa</span><span class="ocard-desc">Trouxe resultado</span></label>
+          <label class="ocard"><input type="radio" name="agencia-exp" value="razoavel"><span class="ocard-main">Razoável</span><span class="ocard-desc">Entregou, mas poderia ser mais</span></label>
+          <label class="ocard"><input type="radio" name="agencia-exp" value="pessima"><span class="ocard-main">Ruim</span><span class="ocard-desc">Pagou e não viu resultado</span></label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="f-agencia-obs">O que não funcionou ou o que você mudaria?</label>
+        <textarea class="field-textarea" id="f-agencia-obs" name="experiencia-agencia" style="min-height:80px" placeholder="Ex: Só entregavam relatório bonito mas sem resultado. Não entendiam o meu negócio. Turnover alto na equipe…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <hr class="field-divider">
+
+  <div class="field-group">
+    <label class="field-label">Qual é o seu principal objetivo para os próximos 12 meses?</label>
+    <div class="option-cards oc-2">
+      <label class="ocard"><input type="radio" name="objetivo" value="mais-leads"><span class="ocard-main">Gerar mais leads qualificados</span><span class="ocard-desc">Aumentar o volume no topo do funil</span></label>
+      <label class="ocard"><input type="radio" name="objetivo" value="mais-receita"><span class="ocard-main">Aumentar a receita</span><span class="ocard-desc">Crescer o faturamento de forma consistente</span></label>
+      <label class="ocard"><input type="radio" name="objetivo" value="reduzir-cac"><span class="ocard-main">Reduzir o custo de aquisição</span><span class="ocard-desc">Vender mais gastando menos</span></label>
+      <label class="ocard"><input type="radio" name="objetivo" value="construir-marca"><span class="ocard-main">Construir autoridade de marca</span><span class="ocard-desc">Ser referência no segmento</span></label>
+      <label class="ocard"><input type="radio" name="objetivo" value="novo-mercado"><span class="ocard-main">Entrar em novo mercado</span><span class="ocard-desc">Expansão de produto, segmento ou região</span></label>
+      <label class="ocard"><input type="radio" name="objetivo" value="estruturar"><span class="ocard-main">Estruturar o marketing do zero</span><span class="ocard-desc">Não tenho nada organizado ainda</span></label>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Meta de faturamento (próximos 12 meses)</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="meta-fat" value="dobrar"><span class="ocard-main">Dobrar o que faço hoje</span></label>
+        <label class="ocard"><input type="radio" name="meta-fat" value="crescer30"><span class="ocard-main">Crescer 30 – 50%</span></label>
+        <label class="ocard"><input type="radio" name="meta-fat" value="superar1M"><span class="ocard-main">Superar R$1M/mês</span></label>
+        <label class="ocard"><input type="radio" name="meta-fat" value="nao-tenho"><span class="ocard-main">Não tenho meta definida</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Budget disponível para parceria de marketing</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="budget-parceria" value="ate3k"><span class="ocard-main">Até R$3k/mês</span></label>
+        <label class="ocard"><input type="radio" name="budget-parceria" value="3k-8k"><span class="ocard-main">R$3k – 8k/mês</span></label>
+        <label class="ocard"><input type="radio" name="budget-parceria" value="8k-20k"><span class="ocard-main">R$8k – 20k/mês</span></label>
+        <label class="ocard"><input type="radio" name="budget-parceria" value="+20k"><span class="ocard-main">+R$20k/mês</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Você é o decisor final?</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="decisor" value="sim"><span class="ocard-main">Sim</span><span class="ocard-desc">Sou sócio / fundador</span></label>
+        <label class="ocard"><input type="radio" name="decisor" value="compartilhado"><span class="ocard-main">Compartilhado</span><span class="ocard-desc">Preciso aprovar com sócio</span></label>
+        <label class="ocard"><input type="radio" name="decisor" value="nao"><span class="ocard-main">Não</span><span class="ocard-desc">Sou gestor / colaborador</span></label>
+        <label class="ocard"><input type="radio" name="decisor" value="board"><span class="ocard-main">Diretoria / Board</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Quando quer começar?</label>
+      <div class="option-cards oc-2">
+        <label class="ocard"><input type="radio" name="inicio" value="imediato"><span class="ocard-main">Imediato</span><span class="ocard-desc">Assim que possível</span></label>
+        <label class="ocard"><input type="radio" name="inicio" value="30dias"><span class="ocard-main">Em até 30 dias</span></label>
+        <label class="ocard"><input type="radio" name="inicio" value="3meses"><span class="ocard-main">Em 1 – 3 meses</span></label>
+        <label class="ocard"><input type="radio" name="inicio" value="explorando"><span class="ocard-main">Ainda explorando</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-contexto">Há algum contexto importante que devemos saber antes da conversa? <span class="optional">(opcional)</span></label>
+    <textarea class="field-textarea" id="f-contexto" name="contexto-adicional" placeholder="Ex: acabamos de captar investimento, estamos lançando um novo produto, passamos por uma crise de reputação, nosso maior cliente cancelou…" maxlength="400"></textarea>
+  </div>
+</div>
+
+<!-- ══ ETAPA 6 — Contato ══ -->
+<div class="step-panel" data-step="6">
+  <p class="step-eyebrow">Seus dados</p>
+  <h2 class="step-title">Quem vai receber o diagnóstico?</h2>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label" for="f-nome">Nome completo</label>
+      <input type="text" class="field-input" id="f-nome" placeholder="Nome completo" autocomplete="name">
+      <p class="field-error" id="err-nome">Informe seu nome</p>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-cargo">Cargo / função na empresa</label>
+      <input type="text" class="field-input" id="f-cargo" name="cargo" placeholder="Ex: CEO, Diretor de Marketing, Sócio…">
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label" for="f-whats">WhatsApp</label>
+      <input type="tel" class="field-input" id="f-whats" placeholder="(11) 99999-9999" autocomplete="tel">
+      <p class="field-error" id="err-whats">Informe seu WhatsApp</p>
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-email">E-mail</label>
+      <input type="email" class="field-input" id="f-email" placeholder="seu@email.com" autocomplete="email">
+      <p class="field-error" id="err-email">Informe um e-mail válido</p>
+    </div>
+  </div>
+
+  <div class="field-row2">
+    <div class="field-group">
+      <label class="field-label">Preferência de contato</label>
+      <div class="option-cards oc-3">
+        <label class="ocard"><input type="radio" name="contato-pref" value="whatsapp"><span class="ocard-main">WhatsApp</span></label>
+        <label class="ocard"><input type="radio" name="contato-pref" value="email"><span class="ocard-main">E-mail</span></label>
+        <label class="ocard"><input type="radio" name="contato-pref" value="ligacao"><span class="ocard-main">Ligação</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Melhor horário</label>
+      <div class="option-cards oc-3">
+        <label class="ocard"><input type="radio" name="horario" value="manha"><span class="ocard-main">Manhã</span><span class="ocard-desc">8h – 12h</span></label>
+        <label class="ocard"><input type="radio" name="horario" value="tarde"><span class="ocard-main">Tarde</span><span class="ocard-desc">12h – 18h</span></label>
+        <label class="ocard"><input type="radio" name="horario" value="qualquer"><span class="ocard-main">Qualquer</span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label class="field-label" for="f-mais">Algo mais que devemos saber antes de te ligar? <span class="optional">(opcional)</span></label>
+    <textarea class="field-textarea" id="f-mais" name="observacoes" placeholder="Dúvidas, restrições de horário, contexto específico, o que motivou você a preencher esse diagnóstico agora…" maxlength="400"></textarea>
+  </div>
+
+  <p class="privacy-note">Seus dados são confidenciais e usados exclusivamente para o diagnóstico. Sem spam, sem lista de e-mail, sem pressão de venda na primeira conversa. Você decide se faz sentido continuar.</p>
+</div>
+
+    </div><!-- /wizard-body -->
+    </form>
+
+    <div class="wizard-footer">
+      <button class="btn-back" id="btn-back" type="button">← Voltar</button>
+      <button class="btn-next" id="btn-next" type="button">Próxima etapa →</button>
+    </div>
+
+  </div><!-- /wizard-card -->
+</div><!-- /page-wizard -->
+
+<!-- ══════════════════ THANK YOU ══════════════════ -->
+<div class="thankyou-wrap hidden" id="thankyou">
+  <div class="thankyou-card">
+    <div class="ty-check">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12.5L10 17.5L19 7" stroke="#18A0A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="ty-eyebrow">Diagnóstico recebido</p>
+    <h2 class="ty-title">Obrigado, <span class="ty-name" id="ty-name"></span></h2>
+    <p class="ty-sub">Nossa equipe vai analisar as informações e entrar em contato em até <strong>48 horas</strong> com uma análise personalizada — específica para o seu negócio e segmento.</p>
+    <div class="ty-promises">
+      <div class="ty-promise"><span class="ty-dot"></span><span>Sem pitch de vendas na primeira conversa</span></div>
+      <div class="ty-promise"><span class="ty-dot"></span><span>Diagnóstico real, com dados do seu segmento e benchmarks do mercado</span></div>
+      <div class="ty-promise"><span class="ty-dot"></span><span>Você decide se faz sentido continuar — sem pressão</span></div>
+    </div>
+    <a href="index.html" class="btn-ty">← Voltar ao site</a>
+  </div>
+</div>
+
+<script>
+/* ── CURSOR ── */
+const cursorEl = document.getElementById('cursor');
+const ringEl   = document.getElementById('cursor-ring');
+let mx = -100, my = -100, lx = -100, ly = -100;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursorEl.style.left = mx + 'px'; cursorEl.style.top = my + 'px';
+});
+(function aniRing() {
+  lx += (mx - lx) * 0.12; ly += (my - ly) * 0.12;
+  ringEl.style.left = lx + 'px'; ringEl.style.top = ly + 'px';
+  requestAnimationFrame(aniRing);
+})();
+document.querySelectorAll('a, button, label, .ocard, input, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursorEl.style.width = '18px'; cursorEl.style.height = '18px';
+    ringEl.style.width = '52px'; ringEl.style.height = '52px';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursorEl.style.width = '10px'; cursorEl.style.height = '10px';
+    ringEl.style.width = '36px'; ringEl.style.height = '36px';
+  });
+});
+
+/* ── CHAR COUNT ── */
+const icpArea = document.getElementById('f-icp');
+const icpCount = document.getElementById('icp-count');
+if (icpArea) icpArea.addEventListener('input', () => icpCount.textContent = icpArea.value.length);
+
+/* ── CONDITIONAL REVEALS ── */
+function bindConditional(triggerName, revealId, showValues) {
+  const reveal = document.getElementById(revealId);
+  if (!reveal) return;
+  document.querySelectorAll(`input[name="${triggerName}"]`).forEach(radio => {
+    radio.addEventListener('change', () => {
+      const show = showValues.includes(radio.value);
+      reveal.classList.toggle('open', show);
+    });
+  });
+}
+bindConditional('conhece-cac', 'cac-reveal', ['sim', 'aproximado']);
+bindConditional('agencia', 'agencia-reveal', ['sim', 'tentei']);
+
+/* ── WIZARD ── */
+const TOTAL = 6;
+let step = 1;
+const btnNext = document.getElementById('btn-next');
+const btnBack = document.getElementById('btn-back');
+
+const STEP_LABELS = ['O negócio', 'Os números', 'Seus clientes', 'Marketing atual', 'Histórico e objetivos', 'Seus dados'];
+
+function updateDots() {
+  document.querySelectorAll('.si-dot').forEach(dot => {
+    const n = parseInt(dot.dataset.dot);
+    dot.classList.remove('done', 'active');
+    if (n < step) dot.classList.add('done');
+    else if (n === step) dot.classList.add('active');
+  });
+  document.querySelectorAll('.si-line').forEach(line => {
+    const n = parseInt(line.dataset.line);
+    line.classList.toggle('done', n < step);
+  });
+}
+
+function updateUI() {
+  document.getElementById('step-num').textContent = step;
+  updateDots();
+  btnBack.classList.toggle('visible', step > 1);
+  if (step === TOTAL) {
+    btnNext.textContent = 'Enviar diagnóstico';
+  } else {
+    btnNext.textContent = 'Próxima etapa →';
+  }
+}
+
+function goTo(newStep) {
+  document.querySelector('.step-panel.active').classList.remove('active');
+  document.querySelector(`.step-panel[data-step="${newStep}"]`).classList.add('active');
+  step = newStep;
+  updateUI();
+  document.querySelector('.wizard-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── VALIDATION ── */
+function clearErr(id, errId) {
+  const el = document.getElementById(id);
+  const er = document.getElementById(errId);
+  if (el) el.classList.remove('invalid');
+  if (er) er.classList.remove('show');
+}
+function showErr(id, errId) {
+  const el = document.getElementById(id);
+  const er = document.getElementById(errId);
+  if (el) { el.classList.add('invalid'); el.focus(); }
+  if (er) er.classList.add('show');
+}
+
+function validateStep1() {
+  const empresa  = document.getElementById('f-empresa').value.trim();
+  const segmento = document.getElementById('f-segmento').value.trim();
+  clearErr('f-empresa','err-empresa'); clearErr('f-segmento','err-segmento');
+  let ok = true;
+  if (!empresa)  { showErr('f-empresa','err-empresa');   ok = false; }
+  if (!segmento) { showErr('f-segmento','err-segmento'); ok = false; }
+  return ok;
+}
+
+function validateStep3() {
+  const icp = document.getElementById('f-icp').value.trim();
+  clearErr('f-icp','err-icp');
+  if (!icp) { showErr('f-icp','err-icp'); return false; }
+  return true;
+}
+
+function validateStep6() {
+  const nome  = document.getElementById('f-nome').value.trim();
+  const whats = document.getElementById('f-whats').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  clearErr('f-nome','err-nome'); clearErr('f-whats','err-whats'); clearErr('f-email','err-email');
+  let ok = true;
+  if (!nome)  { showErr('f-nome','err-nome');   ok = false; }
+  if (!whats) { showErr('f-whats','err-whats'); ok = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('f-email','err-email'); ok = false; }
+  return ok;
+}
+
+/* Clear on input */
+[['f-empresa','err-empresa'],['f-segmento','err-segmento'],['f-icp','err-icp'],
+ ['f-nome','err-nome'],['f-whats','err-whats'],['f-email','err-email']].forEach(([id, eid]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', () => clearErr(id, eid));
+});
+
+btnNext.addEventListener('click', () => {
+  if (step === 1 && !validateStep1()) return;
+  if (step === 3 && !validateStep3()) return;
+  if (step === TOTAL) {
+    if (!validateStep6()) return;
+    submit();
+    return;
+  }
+  goTo(step + 1);
+});
+
+btnBack.addEventListener('click', () => { if (step > 1) goTo(step - 1); });
+
+/* ── SUBMIT ── */
+async function submit() {
+  const nome    = document.getElementById('f-nome').value.trim().split(' ')[0];
+  const empresa = document.getElementById('f-empresa').value.trim();
+  document.getElementById('f-subject').value = 'Diagnóstico GVX — ' + empresa;
+
+  const form = document.getElementById('diag-form');
+  const data = new FormData(form);
+
+  btnNext.textContent = 'Enviando…';
+  btnNext.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      document.getElementById('ty-name').textContent = nome + '!';
+      document.getElementById('page-wizard').classList.add('hidden');
+      document.getElementById('thankyou').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      btnNext.textContent = 'Enviar diagnóstico';
+      btnNext.disabled = false;
+      alert('Erro ao enviar. Tente novamente em instantes.');
+    }
+  } catch (e) {
+    btnNext.textContent = 'Enviar diagnóstico';
+    btnNext.disabled = false;
+    alert('Erro de conexão. Verifique sua internet e tente novamente.');
+  }
+}
+
+/* ── INIT ── */
+updateUI();
+</script>
+</body>
+</html>
